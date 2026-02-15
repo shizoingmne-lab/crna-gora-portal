@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eГосударство - Электронный портал Црна Гора</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #C8102E;
+            --gold: #D4AF37;
+            --navy: #1a2332;
+            --slate: #334155;
+            --cream: #faf8f5;
+            --white: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: linear-gradient(135deg, var(--cream) 0%, #e8e4dd 100%);
+            color: var(--navy);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--slate) 100%);
+            color: var(--white);
+            padding: 2rem 0;
+            box-shadow: 0 4px 20px var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M50 5 L95 95 L5 95 Z" fill="rgba(255,255,255,0.03)" /></svg>');
+            opacity: 0.4;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(100px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .emblem {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--gold) 0%, #c9a961 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--navy);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4); }
+            50% { box-shadow: 0 8px 35px rgba(212, 175, 55, 0.7); }
+        }
+
+        .header-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-text p {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .nav {
+            background: var(--white);
+            box-shadow: 0 2px 10px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            padding: 1.2rem 2rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--slate);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            font-family: 'IBM Plex Sans', sans-serif;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: var(--primary);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-btn:hover {
+            color: var(--primary);
+        }
+
+        .nav-btn:hover::before {
+            width: 80%;
+        }
+
+        .nav-btn.active {
+            color: var(--primary);
+        }
+
+        .nav-btn.active::before {
+            width: 80%;
+        }
+
+        .main-content {
+            padding: 3rem 0;
+        }
+
+        .section {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--navy);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--gold);
+            display: inline-block;
+        }
+
+        .section h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--slate);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.875rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'IBM Plex Sans', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary) 0%, #a00d26 100%);
+            color: var(--white);
+            padding: 1rem 3rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(200, 16, 46, 0.3);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(200, 16, 46, 0.4);
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .info-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .law-item {
+            background: var(--cream);
+            padding: 1.25rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--gold);
+            transition: all 0.3s ease;
+        }
+
+        .law-item:hover {
+            transform: translateX(8px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .law-item strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer {
+            background: var(--navy);
+            color: var(--white);
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .footer p {
+            opacity: 0.8;
+        }
+
+        .flag-colors {
+            display: flex;
+            height: 6px;
+            margin-top: 1rem;
+        }
+
+        .flag-red {
+            flex: 1;
+            background: #C8102E;
+        }
+
+        .flag-gold {
+            flex: 1;
+            background: #D4AF37;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--primary) 0%, #a00d26 100%);
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(200, 16, 46, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .label {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header-text h1 {
+                font-size: 1.8rem;
+            }
+
+            .section {
+                padding: 2rem 1.5rem;
+            }
+
+            .nav-btn {
+                padding: 1rem 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="emblem">🏛️</div>
+                <div class="header-text">
+                    <h1>eГосударство Црна Гора</h1>
+                    <p>Elektronska Vlada Republike Crne Gore</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <div class="nav-container">
+            <button class="nav-btn active" onclick="showSection('info')">О Черногории</button>
+            <button class="nav-btn" onclick="showSection('residency')">ВНЖ</button>
+            <button class="nav-btn" onclick="showSection('property')">Недвижимость</button>
+            <button class="nav-btn" onclick="showSection('constitution')">Конституция</button>
+            <button class="nav-btn" onclick="showSection('laws')">Законы</button>
+            <button class="nav-btn" onclick="showSection('rules')">Правила</button>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <!-- Информация о стране -->
+            <section id="info" class="section active">
+                <h2>О Черногории</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="number">622k</div>
+                        <div class="label">Население</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="number">13,812</div>
+                        <div class="label">км² территория</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="number">2006</div>
+                        <div class="label">Год независимости</div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h4>Столица</h4>
+                    <p>Подгорица (Podgorica) — политический и административный центр страны</p>
+                </div>
+
+                <div class="info-card">
+                    <h4>Официальный язык</h4>
+                    <p>Черногорский (Crnogorski jezik). В обиходе также сербский, боснийский, албанский и хорватский</p>
+                </div>
+
+                <div class="info-card">
+                    <h4>Валюта</h4>
+                    <p>Евро (EUR) — официальная валюта Черногории</p>
+                </div>
+
+                <div class="info-card">
+                    <h4>Географическое положение</h4>
+                    <p>Государство в Юго-Восточной Европе на Адриатическом побережье Балканского полуострова. Граничит с Хорватией, Боснией и Герцеговиной, Сербией, Косово и Албанией</p>
+                </div>
+
+                <div class="info-card">
+                    <h4>Климат</h4>
+                    <p>Побережье — средиземноморский, горные районы — умеренно-континентальный. Лето жаркое (+25-30°C), зима мягкая на побережье (+5-10°C)</p>
+                </div>
+
+                <div class="info-card">
+                    <h4>Экономика</h4>
+                    <p>Основные отрасли: туризм, энергетика, металлургия, сельское хозяйство. Черногория — кандидат на вступление в ЕС</p>
+                </div>
+
+                <h3>Основные города</h3>
+                <p><strong>Подгорица</strong> — столица, <strong>Будва</strong> — туристический центр, <strong>Котор</strong> — город-музей ЮНЕСКО, <strong>Бар</strong> — морской порт, <strong>Цетине</strong> — историческая столица</p>
+            </section>
+
+            <!-- Подача на ВНЖ -->
+            <section id="residency" class="section">
+                <h2>Подача на временный вид на жительство</h2>
+                
+                <div class="info-card">
+                    <h4>Требования для получения ВНЖ</h4>
+                    <p>Иностранные граждане могут подать заявление на временный вид на жительство по следующим основаниям: трудоустройство, бизнес, обучение, воссоединение семьи, владение недвижимостью</p>
+                </div>
+
+                <h3>Онлайн-заявка на ВНЖ</h3>
+                <form id="residencyForm">
+                    <div class="form-group">
+                        <label>Фамилия *</label>
+                        <input type="text" required placeholder="Иванов">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Имя *</label>
+                        <input type="text" required placeholder="Иван">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Отчество</label>
+                        <input type="text" placeholder="Иванович">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Дата рождения *</label>
+                        <input type="date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Гражданство *</label>
+                        <input type="text" required placeholder="Российская Федерация">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Номер паспорта *</label>
+                        <input type="text" required placeholder="123456789">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Основание для ВНЖ *</label>
+                        <select required>
+                            <option value="">Выберите основание</option>
+                            <option value="work">Трудоустройство</option>
+                            <option value="business">Предпринимательская деятельность</option>
+                            <option value="study">Обучение</option>
+                            <option value="family">Воссоединение семьи</option>
+                            <option value="property">Владение недвижимостью</option>
+                            <option value="other">Иное</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Адрес проживания в Черногории *</label>
+                        <input type="text" required placeholder="Будва, ул. Светог Саве 15">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input type="email" required placeholder="ivan.ivanov@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Телефон *</label>
+                        <input type="tel" required placeholder="+382 69 123 456">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Дополнительная информация</label>
+                        <textarea placeholder="Укажите дополнительные сведения, которые могут быть важны для рассмотрения вашего заявления"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Подать заявление</button>
+                </form>
+
+                <h3 style="margin-top: 3rem;">Необходимые документы</h3>
+                <div class="law-item">
+                    <strong>1. Заграничный паспорт</strong>
+                    Действительный не менее 6 месяцев с момента подачи заявления
+                </div>
+                <div class="law-item">
+                    <strong>2. Фотографии</strong>
+                    2 цветные фотографии размером 3.5 x 4.5 см
+                </div>
+                <div class="law-item">
+                    <strong>3. Подтверждение финансовой обеспеченности</strong>
+                    Выписка с банковского счета или другие документы
+                </div>
+                <div class="law-item">
+                    <strong>4. Медицинская страховка</strong>
+                    Действительная на территории Черногории
+                </div>
+                <div class="law-item">
+                    <strong>5. Справка об отсутствии судимости</strong>
+                    Из страны гражданства (не старше 6 месяцев)
+                </div>
+                <div class="law-item">
+                    <strong>6. Документы по основанию</strong>
+                    Трудовой договор, свидетельство о регистрации компании, документы на недвижимость и т.д.
+                </div>
+            </section>
+
+            <!-- Регистрация недвижимости -->
+            <section id="property" class="section">
+                <h2>Регистрация недвижимости</h2>
+
+                <div class="info-card">
+                    <h4>Кадастровая служба Черногории</h4>
+                    <p>Все сделки с недвижимостью регистрируются в Управлении недвижимости Черногории (Uprava za nekretnine). Регистрация является обязательной для подтверждения права собственности</p>
+                </div>
+
+                <h3>Онлайн-регистрация недвижимости</h3>
+                <form id="propertyForm">
+                    <div class="form-group">
+                        <label>Тип сделки *</label>
+                        <select required>
+                            <option value="">Выберите тип</option>
+                            <option value="purchase">Покупка</option>
+                            <option value="sale">Продажа</option>
+                            <option value="inheritance">Наследство</option>
+                            <option value="gift">Дарение</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Тип недвижимости *</label>
+                        <select required>
+                            <option value="">Выберите тип</option>
+                            <option value="apartment">Квартира</option>
+                            <option value="house">Дом</option>
+                            <option value="land">Земельный участок</option>
+                            <option value="commercial">Коммерческая недвижимость</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Кадастровый номер *</label>
+                        <input type="text" required placeholder="1234/5/67-8">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Адрес объекта *</label>
+                        <input type="text" required placeholder="Будва, ул. Ядранска 10, кв. 5">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Площадь (м²) *</label>
+                        <input type="number" required placeholder="75">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Фамилия Имя собственника *</label>
+                        <input type="text" required placeholder="Иванов Иван">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Номер паспорта собственника *</label>
+                        <input type="text" required placeholder="123456789">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Стоимость сделки (EUR) *</label>
+                        <input type="number" required placeholder="150000">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input type="email" required placeholder="ivan.ivanov@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Телефон *</label>
+                        <input type="tel" required placeholder="+382 69 123 456">
+                    </div>
+
+                    <button type="submit" class="btn-submit">Подать заявку на регистрацию</button>
+                </form>
+
+                <h3 style="margin-top: 3rem;">Этапы регистрации</h3>
+                <div class="law-item">
+                    <strong>Шаг 1: Подготовка документов</strong>
+                    Договор купли-продажи, кадастровые документы, удостоверения личности
+                </div>
+                <div class="law-item">
+                    <strong>Шаг 2: Нотариальное заверение</strong>
+                    Договор должен быть заверен нотариусом
+                </div>
+                <div class="law-item">
+                    <strong>Шаг 3: Подача в кадастровую службу</strong>
+                    Документы подаются в Uprava za nekretnine
+                </div>
+                <div class="law-item">
+                    <strong>Шаг 4: Оплата налогов и сборов</strong>
+                    Налог на передачу недвижимости — 3% от стоимости
+                </div>
+                <div class="law-item">
+                    <strong>Шаг 5: Получение свидетельства</strong>
+                    Выписка из кадастра подтверждает право собственности
+                </div>
+            </section>
+
+            <!-- Конституция -->
+            <section id="constitution" class="section">
+                <h2>Конституция Черногории</h2>
+
+                <div class="info-card">
+                    <h4>Устав Црна Гора / Ustav Crne Gore</h4>
+                    <p>Конституция Черногории была принята 19 октября 2007 года Скупщиной Республики Черногория. Она является высшим правовым актом страны</p>
+                </div>
+
+                <h3>Основные положения Конституции</h3>
+
+                <div class="law-item">
+                    <strong>Статья 1: Государственная форма</strong>
+                    Черногория — независимое, демократическое, экологическое и социальное государство
+                </div>
+
+                <div class="law-item">
+                    <strong>Статья 2: Суверенитет</strong>
+                    Носителем суверенитета является народ. Народ осуществляет власть через свободные выборы и референдумы
+                </div>
+
+                <div class="law-item">
+                    <strong>Статья 8: Государственные символы</strong>
+                    Флаг Черногории — красный с золотой каймой и гербом в центре. Гимн — "Ој, свијетла мајска зоро"
+                </div>
+
+                <div class="law-item">
+                    <strong>Статья 13: Официальный язык</strong>
+                    Официальный язык — черногорский. В официальном использовании также сербский, боснийский, албанский и хорватский
+                </div>
+
+                <h3>Права и свободы граждан</h3>
+
+                <div class="law-item">
+                    <strong>Статья 28: Равенство перед законом</strong>
+                    Все равны перед законом независимо от любых особенностей или личных свойств
+                </div>
+
+                <div class="law-item">
+                    <strong>Статья 29: Право на жизнь</strong>
+                    Каждый имеет право на жизнь. Смертная казнь запрещена
+                </div>
+
+                <div class="law-item">
+                    <strong>Статья 39: Свобода передвижения</strong>
+                    Каждый имеет право свободно передвигаться по территории Черногории и выбирать место жительства
+                </div>
+
+                <div class="law-item">
+                    <strong>Статья 60: Право на труд</strong>
+                    Каждый имеет право на труд, свободный выбор профессии и достойные условия работы
+                </div>
+
+                <div class="law-item">
+                    <strong>Статья 69: Право собственности</strong>
+                    Право собственности гарантируется. Собственность налагает обязанности и должна служить общему благу
+                </div>
+
+                <h3>Государственное устройство</h3>
+                <p>Черногория — парламентская республика. Законодательную власть осуществляет Скупщина (парламент), исполнительную — Правительство во главе с Премьер-министром, главой государства является Президент</p>
+            </section>
+
+            <!-- Законы -->
+            <section id="laws" class="section">
+                <h2>Основные законы Црна Гора</h2>
+
+                <h3>Миграционное законодательство</h3>
+
+                <div class="law-item">
+                    <strong>Закон об иностранцах (Zakon o strancima)</strong>
+                    Регулирует условия въезда, пребывания, трудоустройства иностранных граждан и получение видов на жительство. Определяет правовой статус иностранцев на территории Черногории
+                </div>
+
+                <div class="law-item">
+                    <strong>Закон о гражданстве (Zakon o crnogorskom državljanstvu)</strong>
+                    Устанавливает основания приобретения и утраты черногорского гражданства. Включает натурализацию, гражданство по происхождению и браку
+                </div>
+
+                <h3>Трудовое право</h3>
+
+                <div class="law-item">
+                    <strong>Закон о труде (Zakon o radu)</strong>
+                    Регулирует трудовые отношения, права и обязанности работников и работодателей. Устанавливает рабочее время (40 часов в неделю), минимальную заработную плату, отпуска и социальные гарантии
+                </div>
+
+                <h3>Недвижимость и собственность</h3>
+
+                <div class="law-item">
+                    <strong>Закон о собственности (Zakon o svojini)</strong>
+                    Определяет правовой режим собственности, способы её приобретения и защиты. Иностранцы могут владеть недвижимостью на условиях взаимности
+                </div>
+
+                <div class="law-item">
+                    <strong>Закон о государственном геодезическом плане (Zakon o državnom premjeru i katastru)</strong>
+                    Регулирует кадастровый учёт недвижимости, регистрацию прав собственности и ведение земельных книг
+                </div>
+
+                <h3>Налоговое законодательство</h3>
+
+                <div class="law-item">
+                    <strong>Закон о налоге на прибыль (Zakon o porezu na dohodak)</strong>
+                    Устанавливает ставку подоходного налога 9% и налога на прибыль предприятий. Определяет налоговые обязательства резидентов и нерезидентов
+                </div>
+
+                <div class="law-item">
+                    <strong>Закон о НДС (Zakon o porezu na dodatu vrijednost)</strong>
+                    Базовая ставка НДС составляет 21%, сниженная ставка 7% применяется к продуктам питания, лекарствам и некоторым услугам
+                </div>
+
+                <h3>Уголовное право</h3>
+
+                <div class="law-item">
+                    <strong>Уголовный кодекс (Krivični zakonik)</strong>
+                    Определяет преступления и наказания. Максимальное наказание — лишение свободы до 40 лет. Смертная казнь отменена
+                </div>
+
+                <h3>Безопасность дорожного движения</h3>
+
+                <div class="law-item">
+                    <strong>Закон о безопасности дорожного движения (Zakon o bezbjednosti saobraćaja)</strong>
+                    Регулирует правила дорожного движения, требования к водителям и транспортным средствам. Ограничения скорости: 50 км/ч в городе, 80 км/ч вне города, 130 км/ч на автомагистралях
+                </div>
+            </section>
+
+            <!-- Правила пребывания -->
+            <section id="rules" class="section">
+                <h2>Правила нахождения в стране</h2>
+
+                <h3>Визовый режим и въезд</h3>
+
+                <div class="info-card">
+                    <h4>Безвизовый режим для граждан РФ</h4>
+                    <p>Граждане России могут находиться в Черногории без визы до 30 дней в течение каждых 6 месяцев. Для въезда необходим действительный заграничный паспорт</p>
+                </div>
+
+                <div class="law-item">
+                    <strong>Регистрация по месту пребывания</strong>
+                    Иностранцы обязаны зарегистрироваться в течение 24 часов с момента прибытия. При проживании в отеле — регистрирует отель, при частном размещении — необходимо обратиться в полицию
+                </div>
+
+                <h3>Правила дорожного движения</h3>
+
+                <div class="law-item">
+                    <strong>Водительские права</strong>
+                    Российские водительские права действительны в течение 1 года с момента въезда. Для постоянного проживания необходимо получить черногорские права
+                </div>
+
+                <div class="law-item">
+                    <strong>Ограничения скорости</strong>
+                    Населённые пункты: 50 км/ч, вне населённых пунктов: 80 км/ч, автомагистрали: 130 км/ч. Штрафы от 60 до 2000 EUR
+                </div>
+
+                <div class="law-item">
+                    <strong>Алкоголь за рулём</strong>
+                    Максимально допустимое содержание алкоголя: 0,3 промилле. За превышение — штраф от 300 до 2000 EUR и лишение прав
+                </div>
+
+                <div class="law-item">
+                    <strong>Обязательное оборудование</strong>
+                    Светоотражающий жилет, знак аварийной остановки, аптечка, зимние шины с 15 ноября по 31 марта
+                </div>
+
+                <h3>Таможенные правила</h3>
+
+                <div class="law-item">
+                    <strong>Беспошлинный ввоз</strong>
+                    200 сигарет, 1 л крепких спиртных напитков, 2 л вина, личные вещи на сумму до 300 EUR
+                </div>
+
+                <div class="law-item">
+                    <strong>Валюта</strong>
+                    Декларированию подлежат суммы свыше 10 000 EUR. Вывоз свыше 2000 EUR требует специального разрешения банка
+                </div>
+
+                <h3>Медицина и страхование</h3>
+
+                <div class="law-item">
+                    <strong>Медицинская страховка</strong>
+                    Рекомендуется наличие международной медицинской страховки. Экстренная помощь в государственных больницах бесплатна
+                </div>
+
+                <h3>Общественный порядок</h3>
+
+                <div class="law-item">
+                    <strong>Курение</strong>
+                    Запрещено в общественных местах, ресторанах, барах. Штраф от 50 до 500 EUR
+                </div>
+
+                <div class="law-item">
+                    <strong>Алкоголь</strong>
+                    Распитие спиртных напитков в общественных местах запрещено. Продажа алкоголя лицам до 18 лет запрещена
+                </div>
+
+                <div class="law-item">
+                    <strong>Наркотики</strong>
+                    Строго запрещены. Хранение, использование и распространение наказываются тюремным заключением до 12 лет
+                </div>
+
+                <h3>Трудоустройство иностранцев</h3>
+
+                <div class="law-item">
+                    <strong>Разрешение на работу</strong>
+                    Требуется получить разрешение на работу и временный вид на жительство. Работодатель обязан оформить разрешение через Министерство внутренних дел
+                </div>
+
+                <h3>Полезные контакты</h3>
+
+                <div class="info-card">
+                    <h4>Экстренные службы</h4>
+                    <p><strong>Полиция:</strong> 122 | <strong>Скорая помощь:</strong> 124 | <strong>Пожарная служба:</strong> 123 | <strong>Единый номер экстренных служб:</strong> 112</p>
+                </div>
+
+                <div class="info-card">
+                    <h4>Посольство РФ в Черногории</h4>
+                    <p>Адрес: Podgorica, Veljka Vlahovića 1<br>
+                    Телефон: +382 20 272 510<br>
+                    Email: rusconpg@t-com.me</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="flag-colors">
+                <div class="flag-red"></div>
+                <div class="flag-gold"></div>
+            </div>
+            <p style="margin-top: 1rem;">&copy; 2026 eГосударство Црна Гора | Republika Crna Gora</p>
+            <p>Elektronska Vlada Republike Crne Gore</p>
+        </div>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            // Скрыть все секции
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Убрать активный класс со всех кнопок
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Показать выбранную секцию
+            document.getElementById(sectionId).classList.add('active');
+
+            // Добавить активный класс на кнопку
+            event.target.classList.add('active');
+
+            // Прокрутить наверх
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Обработчик формы ВНЖ
+        document.getElementById('residencyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Ваше заявление на временный вид на жительство принято! Номер заявки: ' + Math.floor(Math.random() * 1000000) + '\n\nВы получите уведомление на указанный email в течение 5 рабочих дней.');
+            this.reset();
+        });
+
+        // Обработчик формы регистрации недвижимости
+        document.getElementById('propertyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Ваша заявка на регистрацию недвижимости принята! Номер заявки: ' + Math.floor(Math.random() * 1000000) + '\n\nСледующий этап: явка в кадастровую службу с оригиналами документов.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
